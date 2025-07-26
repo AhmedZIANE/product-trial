@@ -17,8 +17,15 @@ export class PanelService {
 
   // Remove a product from the cart
   public removeFromCart(productId: number): void {
+    let removed = false;
     this._cart.update((cart) =>
-      cart.filter((product) => product.id !== productId)
+      cart.filter((product) => {
+        if (!removed && product.id === productId) {
+          removed = true; // Mark the first matching product as removed
+          return false; // Exclude this product from the updated cart
+        }
+        return true; // Keep all other products
+      })
     );
     console.log("Produit retiré du panier :", productId);
   }

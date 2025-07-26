@@ -1,5 +1,5 @@
 import { Component, effect, inject } from "@angular/core";
-import { RouterModule } from "@angular/router";
+import { Router, RouterModule } from "@angular/router";
 import { SplitterModule } from "primeng/splitter";
 import { ToolbarModule } from "primeng/toolbar";
 import { PanelMenuComponent } from "./shared/ui/panel-menu/panel-menu.component";
@@ -21,6 +21,7 @@ import { CommonModule } from "@angular/common";
 })
 export class AppComponent {
   private readonly panelService = inject(PanelService);
+  private readonly router = inject(Router);
 
   title = "ALTEN SHOP";
   cartItemCount = 0;
@@ -29,5 +30,9 @@ export class AppComponent {
     effect(() => {
       this.cartItemCount = this.panelService.cart().length;
     });
+  }
+
+  public goToPanelProducts(): void {
+    this.router.navigate(["/products/panel"]);
   }
 }

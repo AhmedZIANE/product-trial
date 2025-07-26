@@ -1,0 +1,15 @@
+<h1 class="text-center">Mon Panier</h1>
+
+<div *ngIf="cartItems.length > 0; else emptyCart">
+    <div *ngFor="let product of cartItems" class="cart-item">
+        <h3>{{ product.name }}</h3>
+        <p>Prix : {{ product.price | currency:'EUR' }}</p>
+        <p>Catégorie : {{ product.category }}</p>
+        <p>Description : {{ product.description }}</p>
+        <hr/>
+    </div>
+</div>
+
+<ng-template #emptyCart>
+    <p class="text-center">Votre panier est vide.</p>
+</ng-template>
