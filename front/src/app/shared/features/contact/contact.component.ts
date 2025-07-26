@@ -21,8 +21,8 @@ export class ContactComponent {
 
   constructor() {
     this.contactForm = this.formBuilder.group({
-      email: ["", [Validators.required, Validators.email]],
-      message: ["", [Validators.required, Validators.maxLength(300)]],
+      email: [""],
+      message: [""],
     });
   }
 
