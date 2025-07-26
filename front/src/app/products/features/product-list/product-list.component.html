@@ -1,47 +1,45 @@
 <h1 class="text-center">Liste des produits</h1>
 
-<p-button label="Créer produit" (onClick)="onCreate()" class="block text-center"/>
+<p-button label="Créer produit" (onClick)="onCreate()" class="block text-center" />
 
-<p-dataView #dv [value]="products()">
+<p-dataView #dv [value]="paginatedProducts">
     <ng-template pTemplate="list" let-products>
         @for (product of products; track product) {
-            <p-card class="block mb-2">
-                <!-- Catégorie -->
-                <span class="font-medium text-secondary text-sm">{{ product.category }}</span>
-                
-                <!-- Nom -->
-                <div class="text-lg font-medium text-900 mt-2">{{ product.name }}</div>
-                
-                <!-- Prix -->
-                <div class="text-md text-primary mt-1">Prix : {{ product.price | currency:'EUR' }}</div>
-                
-                <!-- Description -->
-                <div class="text-sm text-700 mt-1">Description : {{ product.description }}</div>
-                
-                <!-- Disponibilité -->
-                <div class="text-sm mt-1" [ngClass]="{'text-success': product.available, 'text-danger': !product.available}">
-                    Disponibilité : {{ product.available ? 'En stock' : 'Rupture de stock' }}
-                </div>
+        <p-card class="block mb-2">
+            <!-- Catégorie -->
+            <span class="font-medium text-secondary text-sm">{{ product.category }}</span>
 
-                <ng-template pTemplate="footer">
-                    <div class="flex gap-3 mt-1">
-                        <p-button label="Modifier" severity="secondary" (onClick)="onUpdate(product)"/>
-                        <p-button label="Supprimer" severity="danger" (onClick)="onDelete(product)" />
-                        <p-button label="Ajouter au panier" severity="success" (onClick)="onAddToCart(product)" />
-                        <p-button label="Supprimer du panier" severity="warning" (onClick)="onRemoveFromCart(product)" *ngIf="isInCart(product)"/>
-                    </div>
-                </ng-template>
-            </p-card>
+            <!-- Nom -->
+            <div class="text-lg font-medium text-900 mt-2">{{ product.name }}</div>
+
+            <!-- Prix -->
+            <div class="text-md text-primary mt-1">Prix : {{ product.price | currency:'EUR' }}</div>
+
+            <!-- Description -->
+            <div class="text-sm text-700 mt-1">Description : {{ product.description }}</div>
+
+            <!-- Disponibilité -->
+            <div class="text-sm mt-1"
+                [ngClass]="{'text-success': product.available, 'text-danger': !product.available}">
+                Disponibilité : {{ product.available ? 'En stock' : 'Rupture de stock' }}
+            </div>
+
+            <ng-template pTemplate="footer">
+                <div class="flex gap-3 mt-1">
+                    <p-button label="Modifier" severity="secondary" (onClick)="onUpdate(product)" />
+                    <p-button label="Supprimer" severity="danger" (onClick)="onDelete(product)" />
+                    <p-button label="Ajouter au panier" severity="success" (onClick)="onAddToCart(product)" />
+                    <p-button label="Supprimer du panier" severity="warning" (onClick)="onRemoveFromCart(product)"
+                        *ngIf="isInCart(product)" />
+                </div>
+            </ng-template>
+        </p-card>
         }
     </ng-template>
 </p-dataView>
+<p-paginator [rows]="rowsPerPage" [totalRecords]="products().length" (onPageChange)="onPageChange($event)">
+</p-paginator>
 
-<p-dialog [(visible)]="isDialogVisible"
-    [style]="{ width: '50vw' }"
-    header="Ajout/Edition produit">
-    <app-product-form
-        [product]="editedProduct()"
-        (save)="onSave($event)"
-        (cancel)="onCancel()"
-    />
+<p-dialog [(visible)]="isDialogVisible" [style]="{ width: '50vw' }" header="Ajout/Edition produit">
+    <app-product-form [product]="editedProduct()" (save)="onSave($event)" (cancel)="onCancel()" />
 </p-dialog>

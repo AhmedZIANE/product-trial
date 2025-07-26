@@ -6,8 +6,9 @@ import { ProductsService } from "app/products/data-access/products.service";
 import { ProductFormComponent } from "app/products/ui/product-form/product-form.component";
 import { ButtonModule } from "primeng/button";
 import { CardModule } from "primeng/card";
-import { DataViewModule } from 'primeng/dataview';
-import { DialogModule } from 'primeng/dialog';
+import { DataViewModule } from "primeng/dataview";
+import { DialogModule } from "primeng/dialog";
+import { PaginatorModule } from "primeng/paginator";
 
 const emptyProduct: Product = {
   id: 0,
@@ -39,6 +40,7 @@ const emptyProduct: Product = {
     ProductFormComponent,
     CurrencyPipe,
     CommonModule,
+    PaginatorModule,
   ],
 })
 export class ProductListComponent implements OnInit {
@@ -51,8 +53,14 @@ export class ProductListComponent implements OnInit {
   public isCreation = false;
   public readonly editedProduct = signal<Product>(emptyProduct);
 
+  paginatedProducts: Product[] = []; // Products for the current page
+  rowsPerPage = 5; // Number of products per page
+  currentPage = 0; // Current page index
+
   ngOnInit() {
-    this.productsService.get().subscribe();
+    this.productsService.get().subscribe(() => {
+      this.updatePaginatedProducts(); // Update paginated products after fetching
+    });
   }
 
   public onCreate() {
@@ -86,6 +94,11 @@ export class ProductListComponent implements OnInit {
     this.panelService.removeFromCart(product.id);
   }
 
+  public onPageChange(event: any): void {
+    this.currentPage = event.page;
+    this.updatePaginatedProducts();
+  }
+
   public onSave(product: Product) {
     if (this.isCreation) {
       this.productsService.create(product).subscribe();
@@ -97,6 +110,12 @@ export class ProductListComponent implements OnInit {
 
   public onCancel() {
     this.closeDialog();
+  }
+
+  private updatePaginatedProducts(): void {
+    const start = this.currentPage * this.rowsPerPage;
+    const end = start + this.rowsPerPage;
+    this.paginatedProducts = this.products().slice(start, end); // Use the signal's value
   }
 
   private closeDialog() {
