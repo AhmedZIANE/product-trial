@@ -76,6 +76,16 @@ export class ProductListComponent implements OnInit {
     console.log("Produit ajouté au panier :", product);
   }
 
+  public isInCart(product: Product): boolean {
+    return this.panelService
+      .getCartItems()
+      .some((cartItem) => cartItem.id === product.id);
+  }
+
+  public onRemoveFromCart(product: Product): void {
+    this.panelService.removeFromCart(product.id);
+  }
+
   public onSave(product: Product) {
     if (this.isCreation) {
       this.productsService.create(product).subscribe();
