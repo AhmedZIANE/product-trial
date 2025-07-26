@@ -6,8 +6,22 @@
     <ng-template pTemplate="list" let-products>
         @for (product of products; track product) {
             <p-card class="block mb-2">
+                <!-- Catégorie -->
                 <span class="font-medium text-secondary text-sm">{{ product.category }}</span>
+                
+                <!-- Nom -->
                 <div class="text-lg font-medium text-900 mt-2">{{ product.name }}</div>
+                
+                <!-- Prix -->
+                <div class="text-md text-primary mt-1">Prix : {{ product.price | currency:'EUR' }}</div>
+                
+                <!-- Description -->
+                <div class="text-sm text-700 mt-1">Description : {{ product.description }}</div>
+                
+                <!-- Disponibilité -->
+                <div class="text-sm mt-1" [ngClass]="{'text-success': product.available, 'text-danger': !product.available}">
+                    Disponibilité : {{ product.available ? 'En stock' : 'Rupture de stock' }}
+                </div>
 
                 <ng-template pTemplate="footer">
                     <div class="flex gap-3 mt-1">
