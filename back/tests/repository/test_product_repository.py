@@ -1,5 +1,5 @@
-import pytest
 from repository.product_repository import ProductRepository
+import pytest
 from sqlalchemy.ext.asyncio import AsyncSession
 import uuid
 

@@ -17,7 +17,7 @@ class Product(BaseModel):
     inventoryStatus: Literal["INSTOCK", "LOWSTOCK", "OUTOFSTOCK"]
     rating: float
     createdAt: int
-    updatedAt: Optional[int] = None  # <- make this optional
+    updatedAt: Optional[int] = None
 
     model_config = {
         "from_attributes": True

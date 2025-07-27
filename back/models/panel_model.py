@@ -2,7 +2,7 @@ import uuid
 from sqlalchemy import Column, ForeignKey, Integer
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
-from database import Base  # Ensure Base is imported from your database module
+from database import Base
 
 class Cart(Base):
     __tablename__ = "carts"

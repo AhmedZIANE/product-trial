@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 # Configuration pour le token JWT
-SECRET_KEY = "your_secret_key"  # Change this with a secure key
+SECRET_KEY = "secret_key"  # Change this with a secure key
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60
 
