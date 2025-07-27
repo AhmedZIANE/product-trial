@@ -115,7 +115,7 @@ export class ProductListComponent implements OnInit {
   private updatePaginatedProducts(): void {
     const start = this.currentPage * this.rowsPerPage;
     const end = start + this.rowsPerPage;
-    this.paginatedProducts = this.products().slice(start, end); // Use the signal's value
+    this.paginatedProducts = this.products().slice(start, end);
   }
 
   private closeDialog() {

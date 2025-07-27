@@ -1,8 +1,15 @@
+import enum
 from sqlalchemy import Column, Integer, String, Numeric
 from sqlalchemy.orm import declarative_base
+from sqlalchemy import Enum
 
 Base = declarative_base()
 
+class InventoryStatusEnum(enum.Enum):
+    INSTOCK = "INSTOCK"
+    LOWSTOCK = "LOWSTOCK"
+    OUTOFSTOCK = "OUTOFSTOCK"
+    
 class Product(Base):
     __tablename__ = 'products'
 
@@ -16,6 +23,6 @@ class Product(Base):
     quantity = Column(Integer)
     internalReference = Column(String(100))
     shellId = Column(Integer)
-    inventoryStatus = Column(String(50))
+    inventoryStatus = Column(Enum(InventoryStatusEnum), nullable=False)
     rating = Column(Numeric)
     createdAt = Column(Integer)

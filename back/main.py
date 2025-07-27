@@ -4,12 +4,13 @@ from views.product_api import ProductAPI
 from views.auth_api import UserAPI
 from database import engine
 from models.product_model import Base
+from default_settings import APP_ORIGIN_URL
 
 app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:4200"],
+    allow_origins=[APP_ORIGIN_URL],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -18,7 +19,6 @@ app.add_middleware(
 @app.on_event("startup")
 async def startup():
     async with engine.begin() as conn:
-        # Import your models Base and create tables
         from models.user_model import Base
         await conn.run_sync(Base.metadata.create_all)
 

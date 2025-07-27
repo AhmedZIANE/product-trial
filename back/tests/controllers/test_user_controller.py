@@ -1,5 +1,5 @@
-import pytest
 from controllers.user_controller import UserController
+import pytest
 from sqlalchemy.ext.asyncio import AsyncSession
 
 @pytest.mark.asyncio
