@@ -5,8 +5,9 @@ from database import get_session
 from validator.product_validator import ProductCreate, ProductUpdate, Product
 
 class ProductController:
-    async def get_products(self, session: AsyncSession = Depends(get_session)):
-        products = await ProductRepository.get_products(session)
+    @staticmethod
+    async def get_products():
+        products = await ProductRepository.get_products()
         # return [Product.from_orm(p) for p in products]
         return products
 

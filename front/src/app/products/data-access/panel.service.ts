@@ -12,7 +12,6 @@ export class PanelService {
   // Add a product to the cart
   public addToCart(product: Product): void {
     this._cart.update((cart) => [...cart, product]);
-    console.log("Produit ajouté au panier :", product);
   }
 
   // Remove a product from the cart
@@ -24,7 +23,7 @@ export class PanelService {
           removed = true; // Mark the first matching product as removed
           return false; // Exclude this product from the updated cart
         }
-        return true; // Keep all other products
+        return true;
       })
     );
     console.log("Produit retiré du panier :", productId);

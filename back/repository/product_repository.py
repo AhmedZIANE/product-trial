@@ -3,12 +3,15 @@ from sqlalchemy.future import select
 from sqlalchemy import update as sqlalchemy_update, delete as sqlalchemy_delete
 from models.product_model import Product as ProductModel 
 from validator.product_validator import ProductCreate, ProductUpdate
+from database import get_session
+
 
 class ProductRepository:
     @staticmethod
-    async def get_products(session: AsyncSession):
-        result = await session.execute(select(ProductModel))
-        return result.scalars().all()
+    async def get_products():
+        async for session in get_session():
+            result = await session.execute(select(ProductModel))
+            return result.scalars().all()
 
     @staticmethod
     async def create_product(session: AsyncSession, product_data: ProductCreate):
@@ -17,7 +20,7 @@ class ProductRepository:
             description=product_data.description,
             price=product_data.price,
             created_at=product_data.created_at,  
-            updated_at=product_data.updated_at  
+            updated_at=product_data.updated_at   
         )
         session.add(new_product)
         await session.commit()

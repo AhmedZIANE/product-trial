@@ -18,9 +18,9 @@ class ProductAPI:
         self.router.add_api_route("/{product_id}", self.update_product, methods=["PUT"], dependencies=[Depends(admin_only)])
         self.router.add_api_route("/{product_id}", self.delete_product, methods=["DELETE"], dependencies=[Depends(admin_only)])
 
-    async def get_products(self, session: AsyncSession = Depends(get_session)):
+    async def get_products(self):
         try:
-            result = await ProductController.get_products(session)
+            result = await ProductController.get_products()
             return result
         except Exception as e:
             raise HTTPException(status_code=500, detail=str(e))
